@@ -1,0 +1,47 @@
+server:
+  port: 8083
+
+spring:
+  application.name: backend-gateway-client
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+        add-to-simple-url-handler-mapping: true
+      routes:
+      - id: movies_service
+        uri: http://backend-resources:8082/movies
+        predicates:
+        - Path=/movies/**
+        - Method=GET,POST,PUT,DELETE
+      - id: authors_service
+        uri: http://backend-resources:8082/authors
+        predicates:
+        - Path=/authors/**
+        - Method=GET,POST,PUT,DELETE
+      - id: genres_service
+        uri: http://backend-resources:8082/genres
+        predicates:
+        - Path=/genres/**
+        - Method=GET,POST,PUT,DELETE
+      - id: actors_service
+        uri: http://backend-resources:8082/actors
+        predicates:
+          - Path=/actors/**
+          - Method=GET,POST,PUT,DELETE
+      - id: actors_in_movies_service
+        uri: http://backend-resources:8082/actorsinmovies
+        predicates:
+          - Path=/actorsinmovies/**
+          - Method=GET,POST,PUT,DELETE
+
