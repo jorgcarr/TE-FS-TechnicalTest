@@ -34,7 +34,7 @@ public class SecurityConfig {
         http
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/actorsinmovies/**").access(hasAuthority("USER"))
+                        .requestMatchers( "/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/movies/**").access(hasAuthority("USER"))
                         .requestMatchers(HttpMethod.POST, "/movies/**").access(hasAuthority("ADMIN"))
                         .requestMatchers(HttpMethod.GET, "/authors/**").access(hasAuthority("USER"))
